@@ -108,7 +108,7 @@ class FCN993(torch.nn.Module):
         # Classifier kernel is (4, 1) to cover this final dimension.
         self.classifier = torch.nn.Conv2d(
             in_channels=512,
-            out_channels=PITCH_BINS_FCN993, # 486 pitch bins
+            out_channels=486, # 486 pitch bins
             kernel_size=(4, 1),             # Kernel to cover remaining dimension
             stride=(1, 1),
             padding=0                       # 'valid' padding
