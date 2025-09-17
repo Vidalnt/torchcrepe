@@ -35,7 +35,7 @@ def weighted_argmax(logits):
 
     # Construct weights
     if not hasattr(weighted_argmax, 'weights'):
-        weights = torchcrepe.convert.bins_to_cents(torch.arange(360))
+        weights = torchcrepe.convert.bins_to_cents(torch.arange(486))
         weighted_argmax.weights = weights[None, :, None]
 
     # Ensure devices are the same (no-op if they are)
@@ -56,7 +56,7 @@ def viterbi(logits):
     """Sample observations using viterbi decoding"""
     # Create viterbi transition matrix
     if not hasattr(viterbi, 'transition'):
-        xx, yy = np.meshgrid(range(360), range(360))
+        xx, yy = np.meshgrid(range(486), range(486))
         transition = np.maximum(12 - abs(xx - yy), 0)
         transition = transition / transition.sum(axis=1, keepdims=True)
         viterbi.transition = transition

@@ -119,7 +119,7 @@ def predict(audio,
             # Infer independent probabilities for each pitch bin
             probabilities = infer(frames, model, device, embed=False)
 
-            # shape=(batch, 360, time / hop_length)
+            # shape=(batch, 486, time / hop_length)
             probabilities = probabilities.reshape(
                 audio.size(0), -1, PITCH_BINS).transpose(1, 2)
 
@@ -548,7 +548,7 @@ def infer(frames, model='full', device='cpu', embed=False):
             Whether to stop inference at the intermediate embedding layer
 
     Returns
-        logits (torch.tensor [shape=(1 + int(time // hop_length), 360)]) OR
+        logits (torch.tensor [shape=(1 + int(time // hop_length), 486)]) OR
         embedding (torch.tensor [shape=(1 + int(time // hop_length),
                                        embedding_size)])
     """
@@ -573,7 +573,7 @@ def postprocess(probabilities,
     """Convert model output to F0 and periodicity
 
     Arguments
-        probabilities (torch.tensor [shape=(1, 360, time / hop_length)])
+        probabilities (torch.tensor [shape=(1, 486, time / hop_length)])
             The probabilities for each pitch bin inferred by the network
         fmin (float)
             The minimum allowable frequency in Hz
@@ -709,7 +709,7 @@ def preprocess(audio,
 
 def periodicity(probabilities, bins):
     """Computes the periodicity from the network output and pitch bins"""
-    # shape=(batch * time / hop_length, 360)
+    # shape=(batch * time / hop_length, 486)
     probs_stacked = probabilities.transpose(1, 2).reshape(-1, PITCH_BINS)
 
     # shape=(batch * time / hop_length, 1)
