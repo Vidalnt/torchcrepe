@@ -123,6 +123,10 @@ def predict(audio,
             probabilities = probabilities.reshape(
                 audio.size(0), -1, PITCH_BINS).transpose(1, 2)
 
+            print("Probabilities shape:", probabilities.shape) # [1, 486, num_frames]
+            print("Probabilities sample (first frame):", probabilities[0, :, 0])
+            print("Probabilities min/max:", torch.min(probabilities), torch.max(probabilities))
+
             # Convert probabilities to F0 and periodicity
             result = postprocess(probabilities,
                                  fmin,
