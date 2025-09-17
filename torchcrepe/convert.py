@@ -7,11 +7,12 @@ import torchcrepe
 ###############################################################################
 # Pitch unit conversions
 ###############################################################################
-
+BASE_FREQUENCY = 30.0 # Hz
+OFFSET_CENTS = 1200.0 * torch.log2(torch.tensor(BASE_FREQUENCY / 10.0))
 
 def bins_to_cents(bins):
     """Converts pitch bins to cents"""
-    cents = torchcrepe.CENTS_PER_BIN * bins + 1997.3794084376191
+    cents = torchcrepe.CENTS_PER_BIN * bins + OFFSET_CENTS
 
     # Trade quantization error for noise
     return dither(cents)
@@ -24,7 +25,7 @@ def bins_to_frequency(bins):
 
 def cents_to_bins(cents, quantize_fn=torch.floor):
     """Converts cents to pitch bins"""
-    bins = (cents - 1997.3794084376191) / torchcrepe.CENTS_PER_BIN
+    bins = (cents - OFFSET_CENTS) / torchcrepe.CENTS_PER_BIN
     return quantize_fn(bins).int()
 
 
