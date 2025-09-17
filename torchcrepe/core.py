@@ -33,11 +33,11 @@ __all__ = ['CENTS_PER_BIN',
 ###############################################################################
 
 
-CENTS_PER_BIN = 20  # cents
+CENTS_PER_BIN = 12.5  # cents
 MAX_FMAX = 2006.  # hz
-PITCH_BINS = 360
-SAMPLE_RATE = 16000  # hz
-WINDOW_SIZE = 1024  # samples
+PITCH_BINS = 486
+SAMPLE_RATE = 8000  # hz
+WINDOW_SIZE = 993  # samples
 UNVOICED = np.nan
 
 
