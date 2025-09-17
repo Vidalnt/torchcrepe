@@ -134,6 +134,20 @@ def predict(audio,
                                  decoder,
                                  return_harmonicity,
                                  return_periodicity)
+            
+            print("Result type:", type(result))
+            if isinstance(result, tuple):
+                print("Pitch shape:", result[0].shape)
+                print("Periodicity shape:", result[1].shape)
+                print("Sample Pitch values:", result[0][0, :10])
+                print("Sample Periodicity values:", result[1][0, :10])
+                # Verificar nans
+                print("Any Pitch NaN:", torch.isnan(result[0]).any())
+                print("Any Periodicity NaN:", torch.isnan(result[1]).any())
+            else:
+                print("Pitch/Result shape:", result.shape)
+                print("Sample Pitch/Result values:", result[0, :10])
+                print("Any NaN:", torch.isnan(result).any())
 
             # Place on same device as audio to allow very long inputs
             if isinstance(result, tuple):
